@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication
 
 from src.exception.exception import CustomException
 from src.logging.logging import logging
-from gui.components.start_menu import MainMenu
+from gui.page.start_menu import MainMenu
 
 # Main Function to run the application
 def main_screen():
