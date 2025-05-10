@@ -1,9 +1,9 @@
 '''
 Custom button components class
+for the GUI
 '''
 
-from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QPushButton, QGraphicsDropShadowEffect
 
 class CustomButton(QPushButton):
   def __init__(self, text, parent=None):
@@ -11,12 +11,16 @@ class CustomButton(QPushButton):
     self.initButton()
   
   def initButton(self):
+    # Create button's drop shadow
+    shadow = QGraphicsDropShadowEffect()
+    shadow.setBlurRadius(10)
+    
     self.setStyleSheet("""
       font-family: Poppins;
       font-weight: bold;
       font-size: 18px;
-      border-radius: 5px;
-      background-color : #9e9e9e;
-      
+      border-radius: 11px;
+      background-color : #ffffff;
+      padding: 15px 30px;
   """)
-    self.setGeometry(0, 0, 700, 400)
+    self.setGraphicsEffect(shadow)

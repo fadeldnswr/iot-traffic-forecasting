@@ -19,6 +19,3 @@ class CustomException(Exception):
     return "Error occured in python script name [{0}] line number [{1}] error message : [{2}]".format(
       self.file_name, self.line_no, str(self.error_message)
     )
-
-
-

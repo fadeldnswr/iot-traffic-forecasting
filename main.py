@@ -7,7 +7,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
 from PyQt5.QtWidgets import QApplication
 
 from src.exception.exception import CustomException
-from src.logging.logging import logging
 from gui.page.start_menu import MainMenu
 
 # Main Function to run the application
