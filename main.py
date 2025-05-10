@@ -19,9 +19,6 @@ def main_screen():
 
 if __name__ == "__main__":
   try:
-    logging.info("GUI has been started!")
     main_screen()
-    if not main_screen():
-      logging.info("GUI has been stopped due to error!")
   except Exception as e:
     raise CustomException(e, sys)
