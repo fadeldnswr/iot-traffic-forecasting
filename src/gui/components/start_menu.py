@@ -3,8 +3,6 @@ Main menu components for
 the IoT forecasting project
 Graphical User Interface
 '''
-
-import sys
 from gui.constant.constant import BACKGROUND_IMAGE
 from PyQt5.QtWidgets import QMainWindow, QMainWindow, QLabel, QPushButton, QWidget, QVBoxLayout
 from PyQt5.QtGui import QPixmap
