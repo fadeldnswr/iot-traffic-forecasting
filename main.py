@@ -1,21 +1,22 @@
 '''
-Main script to run the
-Streamlit application.
+Main GUI application using the
+combination of CustomTkinter and Tkinter.
 '''
 
-import streamlit as st
-import pandas as pd
+import customtkinter as ctk
+import tkinter as tk
 
-st.write("# Welcome to the Streamlit App")
-st.write("This is a boilerplate for our Streamlit application.")
+from customtkinter import *
+from tkinter import *
+from src.gui.components.button import CustomButton
+from src.gui.page.start_menu import StartMenu
 
-# Example of a dataframe
-df = pd.DataFrame({
-    "Column 1": [1, 2, 3],
-    "Column 2": ["A", "B", "C"],
-    "Column 3": [4.5, 5.5, 6.5]
-})
+# Initialize the main application
+app = CTk()
 
-# Put dataframe in the Streamlit app
-st.write("## Example DataFrame")
-st.dataframe(df)
+# Initialize the StartMenu frame
+start_menu = StartMenu(app)
+start_menu.pack(fill="both", expand=True)
+
+# Create label
+app.mainloop()

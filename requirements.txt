@@ -7,3 +7,4 @@ fastapi
 ipykernel
 PyQt5
 streamlit
+customtkinter
