@@ -24,10 +24,10 @@ class CustomButton(CTkButton):
     self.configure(fg_color="#00a6ff", hover_color="#53b7ed", text_color="white")
     
     # Set the default font
-    self.configure(font=("Poppins", 14, "bold"))
+    self.configure(font=("Poppins", 18, "bold"))
     
     # Set the default size
-    self.configure(width=150, height=40)
+    self.configure(width=300, height=45)
   
   def on_button_click():
     '''
