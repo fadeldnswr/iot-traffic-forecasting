@@ -1,50 +1,36 @@
 '''
-Start menu page for the IoT 
-Network Prediction application.
-'''
+This file is for the introductory page of the GUI.
+It provides an overview of the project, including its objectives, methodology, and expected outcomes.
+''' 
 
-import customtkinter as ctk
-import tkinter as tk
+import streamlit as st
 
-from customtkinter import *
-from tkinter import *
-from src.gui.components.button import CustomButton
-
-class StartMenu(CTkFrame):
-  def __init__(self, parent):
-    '''
-    Initialize the StartMenu frame.
-
-    Parameters:
-    - parent: The parent widget (usually the main application window).
-    - controller: The controller object to manage navigation between frames.
-    '''
-    super().__init__(parent)
-
-    # Set the appearance mode and color theme
-    ctk.set_appearance_mode("Light")
-    ctk.set_default_color_theme("blue")
-
-    # Create a label for sidebar
-    self.title_label = CTkLabel(self, text="", font=("Poppins", 24, "bold"))
-    self.title_label.place(relx=0.03, rely=0.5, anchor="w")
-    self.title_label.configure(fg_color="#ffffff", width=400, height=950, corner_radius=10)
+st.title("Project Introduction")
+st.markdown(
+    """
+    ## Project Overview
+    This project focuses on predicting traffic patterns using IoT data and advanced machine learning techniques, 
+    ARIMA (AutoRegressive Integrated Moving Average) and LSTM (Long Short-Term Memory). 
+    The goal is to forecast traffic conditions in real-time, providing valuable insights for urban planning, traffic management, and optimization.
     
-    # Create label for the text inside the sidebar
-    self.sidebar_label = CTkLabel(self.title_label, text="Main Menu", font=("Poppins", 30, "bold"))
-    self.sidebar_label.place(relx=0.5, rely=0.33, anchor="center")
+    ## Objectives
+    - To develop a robust traffic prediction model using ARIMA and LSTM.
+    - To analyze the performance of both models in terms of accuracy and efficiency.
+    - To provide a user-friendly interface for real-time traffic prediction.
     
-    # Create buttons for the sidebar
-    self.start_button = CustomButton(self.title_label, text="Start")
-    self.start_button.place(relx=0.5, rely=0.4, anchor="center")
-    self.exit_button = CustomButton(self.title_label, text="Exit")
-    self.exit_button.place(relx=0.5, rely=0.47, anchor="center")
+    ## Methodology
+    1. Data Collection: Gather IoT data related to traffic patterns.
+    2. Data Preprocessing: Clean and prepare the data for analysis.
+    3. Model Development: Implement ARIMA and LSTM models for traffic prediction.
+    4. Model Evaluation: Compare the performance of both models using appropriate metrics.
     
-    # Create a label for the main content area
-    self.content_label = CTkLabel(self, text="")
-    self.content_label.configure(fg_color="#ffffff", width=1200, height=950, corner_radius=10)
-    self.content_label.place(relx=0.63, rely=0.5, anchor="center")
+    ## Expected Outcomes
+    - A comprehensive report on the performance of ARIMA and LSTM models.
+    - A user-friendly GUI for real-time traffic prediction.
     
-    # Create a label for the text inside the main content area
-    self.content_area_label = CTkLabel(self.content_label, text="Internet of Things Network\nPrediction using ARIMA", font=("Poppins", 70, "bold"))
-    self.content_area_label.place(relx=0.5, rely=0.5, anchor="center")
+    ## Conclusion
+    This project aims to enhance traffic management systems by leveraging IoT data and advanced machine learning techniques. 
+    The expected outcomes will provide valuable insights for urban planners and traffic managers.
+    
+    """
+)

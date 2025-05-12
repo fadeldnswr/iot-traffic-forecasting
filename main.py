@@ -1,30 +1,24 @@
 '''
 Main GUI application using the
-combination of CustomTkinter and Tkinter.
+Streamlit library.
 '''
 
-import sys
+import streamlit as st
+import pandas as pd
 
-from customtkinter import *
-from tkinter import *
-from src.gui.page.start_menu import StartMenu
-from src.exception.exception import CustomException
-from src.logging.logging import logging
+from src.gui.constant.constant import (
+  CAPTION_TITLE, INTRODUCTION_PAGE, 
+  ESP32_PAGE_PATH, GUI_GUIDE_PAGE_PATH)
 
-# Initialize the main application
-app = CTk()
-app.title("Internet of Things Network Prediction")
-app.geometry("1920x1080")
-app.configure(fg_color="#f0f0f0")
+# Define the pages
+project_introduction = st.Page(INTRODUCTION_PAGE, title="Project Introduction")
+gui_guide = st.Page(GUI_GUIDE_PAGE_PATH, title="GUI Guide")
+esp32_page = st.Page(ESP32_PAGE_PATH, title="Choose ESP32 Device")
 
-# Initialize the StartMenu frame
-start_menu = StartMenu(app)
-start_menu.pack(fill="both", expand=True)
+pages = {
+  "Overview": [project_introduction, gui_guide],
+  "Project": [esp32_page]
+}
 
-# Create label
-if __name__ == "__main__":
-  try:
-    logging.info("Starting the IoT Network Prediction GUI application.")
-    app.mainloop()
-  except Exception as e:
-    raise CustomException(e, sys)
+pg = st.navigation(pages)
+pg.run()
