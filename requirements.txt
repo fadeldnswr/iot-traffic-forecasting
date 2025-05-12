@@ -6,3 +6,4 @@ scikit-learn
 fastapi
 ipykernel
 PyQt5
+streamlit

@@ -1,23 +1,21 @@
-import sys
-import os
+'''
+Main script to run the
+Streamlit application.
+'''
 
-# Menambahkan path folder src ke sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
+import streamlit as st
+import pandas as pd
 
-from PyQt5.QtWidgets import QApplication
+st.write("# Welcome to the Streamlit App")
+st.write("This is a boilerplate for our Streamlit application.")
 
-from src.exception.exception import CustomException
-from gui.page.start_menu import MainMenu
+# Example of a dataframe
+df = pd.DataFrame({
+    "Column 1": [1, 2, 3],
+    "Column 2": ["A", "B", "C"],
+    "Column 3": [4.5, 5.5, 6.5]
+})
 
-# Main Function to run the application
-def main_screen():
-  app = QApplication(sys.argv)
-  window = MainMenu()
-  window.show()
-  sys.exit(app.exec_())
-
-if __name__ == "__main__":
-  try:
-    main_screen()
-  except Exception as e:
-    raise CustomException(e, sys)
+# Put dataframe in the Streamlit app
+st.write("## Example DataFrame")
+st.dataframe(df)
