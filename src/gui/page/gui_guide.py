@@ -5,6 +5,8 @@ This page provides an overview of the project, including its objectives, methodo
 
 import streamlit as st
 
+from src.utils.utils import change_page
+
 st.title("GUI Guide")
 st.markdown(
     """
@@ -12,3 +14,6 @@ st.markdown(
     This page provides an overview of the project, including its objectives, methodology, and expected outcomes.
     """
 )
+
+# Call the change page function
+change_page()
