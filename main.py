@@ -1,27 +1,27 @@
+'''
+Main GUI application using the
+dashh plotly framework.
+'''
+
 import sys
-import os
 
-# Menambahkan path folder src ke sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
-
-from PyQt5.QtWidgets import QApplication
-
+from dash import Dash, dcc, html
+from src.gui.constant.constant import CAPTION_TITLE
 from src.exception.exception import CustomException
-from src.logging.logging import logging
-from gui.page.start_menu import MainMenu
 
-# Main Function to run the application
-def main_screen():
-  app = QApplication(sys.argv)
-  window = MainMenu()
-  window.show()
-  sys.exit(app.exec_())
+# Initialize the Dash application
+app = Dash()
+
+# Set the application layout
+app.layout = [
+  html.H1(children="Welcome to the first Dash Application", style={"textAlign": "center"}),
+  html.Div(children=dcc.Markdown(CAPTION_TITLE, 
+    style={"textAlign": "justify", "fontSize": 18, "width": "500px", "margin": "auto"}), 
+    style={"textAlign": "center"}),
+]
 
 if __name__ == "__main__":
   try:
-    logging.info("GUI has been started!")
-    main_screen()
-    if not main_screen():
-      logging.info("GUI has been stopped due to error!")
+    app.run(debug=True, port=8000)
   except Exception as e:
     raise CustomException(e, sys)

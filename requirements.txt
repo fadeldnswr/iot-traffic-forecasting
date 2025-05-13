@@ -5,4 +5,5 @@ pandas
 scikit-learn
 fastapi
 ipykernel
-PyQt5
+dash
+plotly
