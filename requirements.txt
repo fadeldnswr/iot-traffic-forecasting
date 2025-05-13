@@ -7,3 +7,4 @@ fastapi
 ipykernel
 dash
 plotly
+dash-bootstrap-components
