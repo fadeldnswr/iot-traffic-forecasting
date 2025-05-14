@@ -5,6 +5,4 @@ pandas
 scikit-learn
 fastapi
 ipykernel
-dash
-plotly
-dash-bootstrap-components
+statsmodels
