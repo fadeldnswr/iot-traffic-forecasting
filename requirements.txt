@@ -6,3 +6,4 @@ scikit-learn
 fastapi
 ipykernel
 statsmodels
+dill

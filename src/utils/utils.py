@@ -8,6 +8,8 @@ The functions are designed to be reusable and modular, allowing for easy integra
 import pandas as pd
 import sys
 import matplotlib.pyplot as plt
+import os
+import dill
 
 from typing import List, Tuple
 from src.exception.exception import CustomException
@@ -92,5 +94,37 @@ def plot_acf_pacf(data: pd.DataFrame, lags:int, title:str):
 
     plt.tight_layout()
     plt.show()
+  except Exception as e:
+    raise CustomException(e, sys)
+
+# Create save object function
+def save_object(file_path, obj):
+  '''
+  Save the object to a file using pickle.
+  Parameters:
+  file_path (str): The path to the file where the object will be saved.
+  obj: The object to save.
+  '''
+  try:
+    dir_path = os.path.dirname(file_path)
+    os.makedirs(dir_path, exist_ok=True)
+    
+    with open(file_path, "wb") as file:
+      dill.dump(obj, file=file)
+  except Exception as e:
+    raise CustomException(e, sys)
+
+# Create load object function
+def load_object(file_path):
+  '''
+  Load the object from a file using pickle.
+  Parameters:
+  file_path (str): The path to the file where the object is saved.
+  Returns:
+  The loaded object.
+  '''
+  try:
+    with open(file_path, "rb") as file:
+      return dill.load(file)
   except Exception as e:
     raise CustomException(e, sys)
