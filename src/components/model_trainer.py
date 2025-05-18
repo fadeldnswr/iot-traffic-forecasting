@@ -22,14 +22,15 @@ class ModelTrainerConfig:
   Configuration class to store the model
   training artifacts.
   '''
-  trained_model_file_path = os.path.join("artifacts", "model.pkl")
+  def __init__(self, model_name: str):
+    self.trained_model_file_path = os.path.join("artifacts", f"{model_name}_model.pkl")
 
 class ModelTrainer:
   '''
   Class to train the ARIMA model on the time series data.
   '''
-  def __init__(self, series: pd.Series, order=(1, 1, 1)):
-    self.model_trainer_config = ModelTrainerConfig()
+  def __init__(self, series: pd.Series, order=(1, 1, 1), model_name: str = "model"):
+    self.model_trainer_config = ModelTrainerConfig(model_name=model_name)
     self.series = series
     self.model = None
     self.order = order

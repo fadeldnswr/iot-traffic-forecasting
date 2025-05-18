@@ -27,9 +27,10 @@ class DataTransformation:
     self.time_column = time_column
     self.target_column = target_column
     self.df = df
-    self.series = None
+    self.series = None # Series for ARIMA model
+    self.full_processed_df = None # Full processed dataframe for saving
   
-  def get_data_transformer_object(self) -> pd.Series:
+  def get_data_transformer_object(self) -> pd.DataFrame:
     '''
     The function is responsible for data transformation
     based on the feature of the dataset.
@@ -53,20 +54,41 @@ class DataTransformation:
       logging.info(f"Null values in the dataset\n{self.df.isnull().sum()}")
       
       # Show the data for 24 hours
-      self.series = self.df.loc["2025-05-12 12:00:00":"2025-05-13 12:00:00", self.target_column]
-      logging.info(f"Dataset for 24 hours: {self.series.shape}")
+      self.df = self.df.loc["2025-05-12 12:00:00":"2025-05-13 12:00:00"]
+      logging.info(f"Dataset for 24 hours: {self.df.shape}")
+      self.full_processed_df = self.df.copy()
+    except Exception as e:
+      raise CustomException(e, sys)
+  
+  def save_for_visualization(self):
+    try:
+      if self.full_processed_df is None:
+        raise CustomException("Full processed dataframe is not set. Please call get_data_transformer_object() first.")
+      save_object(
+        file_path=self.data_transformation_config.preprocessor_obj_file_path,
+        obj=self.full_processed_df
+      )
+      logging.info(f"Full processed dataframe saved to {self.data_transformation_config.preprocessor_obj_file_path}")
+    except Exception as e:
+      raise CustomException(e, sys)
+  
+  def get_series(self) -> pd.Series:
+    try:
+      if self.full_processed_df is None:
+        raise CustomException("Full processed dataframe is not set. Please call get_data_transformer_object() first.")
+      self.series = self.full_processed_df[self.target_column]
       return self.series
     except Exception as e:
       raise CustomException(e, sys)
   
-  def initiate_data_transformation(self) -> pd.Series:
+  def initiate_data_transformation(self):
     '''
     The function is responsible for data transformation
     based on the feature of the dataset.
     '''
     try:
       if self.series is None:
-        raise CustomException("Data series is not set. Please call get_data_transformer_object() first.")
+        raise CustomException("Dataframe is not set. Please call get_data_transformer_object() first.")
       logging.info("Data transformation started")
       
       # Create differencing series
@@ -74,16 +96,10 @@ class DataTransformation:
       logging.info("Differencing series created")
       
       # Split into train and test data
-      train_size = int(len(self.series) * 0.8)
+      train_size = int(len(series_diff_data) * 0.8)
       train = series_diff_data[:train_size]
       test = series_diff_data[train_size:]
       logging.info(f"Applying preprocessing object on training and test dataframe")
-      
-      # Save the preprocessor object
-      save_object(
-        file_path=self.data_transformation_config.preprocessor_obj_file_path,
-        obj=self.series
-      )
       
       return (
         train,

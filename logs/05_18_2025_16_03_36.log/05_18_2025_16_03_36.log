@@ -1,0 +1,32 @@
+[ 2025-05-18 16:03:43,626 ] 45 root - INFO - Starting data ingestion for esp32_1_data
+[ 2025-05-18 16:03:43,660 ] 49 root - INFO - Read the dataset as dataframe
+[ 2025-05-18 16:03:43,804 ] 56 root - INFO - Saved the raw dataset to C:\Kuliah\Semester 6\Signal Processing and Multimedia Services\Project\pslm-project\data\esp32_1_data\raw_data.csv
+[ 2025-05-18 16:03:43,804 ] 59 root - INFO - Splitting the dataset into train and test sets
+[ 2025-05-18 16:03:43,946 ] 64 root - INFO - Data ingestion completed successfully
+[ 2025-05-18 16:03:44,080 ] 40 root - INFO - Converted timestamp to datetime
+[ 2025-05-18 16:03:44,083 ] 44 root - INFO - The timestamp set as an index
+[ 2025-05-18 16:03:44,091 ] 48 root - INFO - Dataset shape after resampling: (1538, 6)
+[ 2025-05-18 16:03:44,092 ] 49 root - INFO - Null values in the dataset
+temperature              117
+humidity(%)              117
+latency(ms)              117
+throughput(bytes/sec)    117
+packet_loss(%)           117
+rssi(dBm)                117
+dtype: int64
+[ 2025-05-18 16:03:44,094 ] 53 root - INFO - Null values in the dataset
+temperature              0
+humidity(%)              0
+latency(ms)              0
+throughput(bytes/sec)    0
+packet_loss(%)           0
+rssi(dBm)                0
+dtype: int64
+[ 2025-05-18 16:03:44,100 ] 57 root - INFO - Dataset for 24 hours: (1432, 6)
+[ 2025-05-18 16:03:44,100 ] 70 root - INFO - Data transformation started
+[ 2025-05-18 16:03:44,101 ] 74 root - INFO - Differencing series created
+[ 2025-05-18 16:03:44,101 ] 80 root - INFO - Applying preprocessing object on training and test dataframe
+[ 2025-05-18 16:03:44,104 ] 41 root - INFO - Splitting the data into train and test sets
+[ 2025-05-18 16:03:44,104 ] 44 root - INFO - Train set shape: (916, 6)
+[ 2025-05-18 16:03:44,104 ] 45 root - INFO - Test set shape: (229, 6)
+[ 2025-05-18 16:03:44,104 ] 48 root - INFO - Training the ARIMA model

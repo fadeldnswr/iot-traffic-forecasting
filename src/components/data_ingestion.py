@@ -89,17 +89,26 @@ if __name__ == "__main__":
     # Load the train and test data
     df_train = pd.read_csv(train_path)
     
-    # Transform the data
+    # Define the target column
+    target_column = ["temperature", "humidity(%)", "latency(ms)", "packet_loss(%)", "throughput(bytes/sec)", "rssi(dBm)"]
+    
+    # Data transformation
     data_transform = DataTransformation(
-      df=df_train,
+      df=df_train.copy(),
       time_column="timestamp",
-      target_column="temperature" # Change to the target column you want to predict
+      target_column=None
     )
     data_transform.get_data_transformer_object()
-    train_series, test_series, _ = data_transform.initiate_data_transformation()
+    data_transform.save_for_visualization()
     
-    # Train the ARIMA model
-    model_trainer = ModelTrainer(series=train_series, order=(1, 1, 1))
-    mse = model_trainer.initiate_model_trainer()
+    for col in target_column:
+      print(f"Training model for {col}")
+      data_transform.target_column = col
+      series = data_transform.get_series()
+      train_series, test_series, _ = data_transform.initiate_data_transformation()
+      
+      # Train the ARIMA model
+      model_trainer = ModelTrainer(series=train_series, order=(1, 1, 1), model_name=f"esp32_1_{col}")
+      mse = model_trainer.initiate_model_trainer()
   except Exception as e:
     raise CustomException(e, sys)

@@ -6,12 +6,12 @@ The backend is built using FastAPI and is designed to be modular and scalable.
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.api import main_page, guide, graphs
+from src.api import graphs, prediction
 
 # Configure the FastAPI application
 app = FastAPI(
   title="IoT Network Forecasting Web App",
-  description="Backend for the IoT Network Forecasting Web App",
+  description="API for the IoT Network Forecasting Web Application. This API provides endpoints for graphs and prediction.",
   version="1.0.0",
   debug=True
 )
@@ -26,9 +26,8 @@ app.add_middleware(
 )
 
 # Create the routers
-app.include_router(main_page.router, tags=["main-page"], prefix="/main-page")
-app.include_router(guide.router, tags=["guide"], prefix="/guide")
 app.include_router(graphs.router, tags=["graphs"], prefix="/graphs")
+app.include_router(prediction.router, tags=["prediction"], prefix="/prediction")
 
 # Create main page
 @app.get("/")
