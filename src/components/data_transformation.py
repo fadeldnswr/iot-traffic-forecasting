@@ -101,10 +101,14 @@ class DataTransformation:
       test = series_diff_data[train_size:]
       logging.info(f"Applying preprocessing object on training and test dataframe")
       
+      # Store the last original value for inverse transformation
+      self.last_original_value = self.series.iloc[-1]
+      
       return (
         train,
         test,
         self.data_transformation_config.preprocessor_obj_file_path,
+        self.last_original_value
       )
     except Exception as e:
       raise CustomException(e, sys)
