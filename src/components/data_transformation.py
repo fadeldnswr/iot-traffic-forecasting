@@ -19,16 +19,24 @@ class DataTransformationConfig:
   Configuration class to store the transformed
   data into the artifacts folder.
   '''
-  preprocessor_obj_file_path = os.path.join("artifacts", "preprocessor.pkl")
+  device_id: str
+  @property
+  def preprocessor_obj_file_path(self):
+    return os.path.join("artifacts", f"{self.device_id}_preprocessor.pkl")
 
 class DataTransformation:
-  def __init__(self, df: pd.DataFrame, time_column: str, target_column: str):
-    self.data_transformation_config = DataTransformationConfig()
+  def __init__(self, 
+  df: pd.DataFrame, 
+  time_column: str, 
+  target_column: str,
+  device_id: str):
+    self.data_transformation_config = DataTransformationConfig(device_id=device_id)
     self.time_column = time_column
     self.target_column = target_column
     self.df = df
     self.series = None # Series for ARIMA model
     self.full_processed_df = None # Full processed dataframe for saving
+    self.device_id = device_id # Device ID for saving the preprocessor object
   
   def get_data_transformer_object(self) -> pd.DataFrame:
     '''

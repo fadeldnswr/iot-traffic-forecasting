@@ -24,7 +24,8 @@ with open("artifacts/preprocessor.pkl", "rb") as f:
 
 # Define the target columns and metrics
 target_column = ["temperature", "humidity(%)", "latency(ms)", "rssi(dBm)"]
-metrics = []
+metrics_esp32_1 = []
+metrics_esp32_2 = []
 
 for col in target_column:
   with open(f"artifacts/esp32_1_{col}_model.pkl", "rb") as f:
@@ -47,7 +48,35 @@ for col in target_column:
   mae = mean_absolute_error(ground_truth, forecast_restored)
   
   # Save the errors in dataframe format
-  metrics.append({
+  metrics_esp32_1.append({
+    "Column": col,
+    "mse": mse,
+    "rmse": rmse,
+    "mae": mae
+  })
+
+for col in target_column:
+  with open(f"artifacts/esp32_2_{col}_model.pkl", "rb") as f:
+    model = dill.load(f)
+  
+  # Dapatkan nilai terakhir
+  last_value = df[col].iloc[-1]
+  
+  # Forecast 288 langkah (5 jam)
+  steps = 288
+  forecast = model.forecast(steps=steps)
+  forecast_restored = forecast.cumsum() + last_value
+  
+  # Ground truth
+  ground_truth = df[col].iloc[-steps:]
+  
+  # Hitung MSE
+  mse = mean_squared_error(ground_truth, forecast_restored)
+  rmse = np.sqrt(mse)
+  mae = mean_absolute_error(ground_truth, forecast_restored)
+  
+  # Save the errors in dataframe format
+  metrics_esp32_2.append({
     "Column": col,
     "mse": mse,
     "rmse": rmse,
@@ -55,5 +84,11 @@ for col in target_column:
   })
 
 # Print the results
-results = pd.DataFrame(metrics)
-print(results)
+results_esp32_1 = pd.DataFrame(metrics_esp32_1)
+results_esp32_2 = pd.DataFrame(metrics_esp32_2)
+
+print("==========Results ESP32 1==========")
+print(results_esp32_1)
+print("\n")
+print("==========Results ESP32 2==========")
+print(results_esp32_2)

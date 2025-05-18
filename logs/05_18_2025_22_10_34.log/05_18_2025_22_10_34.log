@@ -1,0 +1,5 @@
+[ 2025-05-18 22:10:36,638 ] 45 root - INFO - Starting data ingestion for esp32_2_data
+[ 2025-05-18 22:10:36,672 ] 49 root - INFO - Read the dataset as dataframe
+[ 2025-05-18 22:10:36,800 ] 56 root - INFO - Saved the raw dataset to C:\Kuliah\Semester 6\Signal Processing and Multimedia Services\Project\pslm-project\data\esp32_2_data\raw_data.csv
+[ 2025-05-18 22:10:36,800 ] 59 root - INFO - Splitting the dataset into train and test sets
+[ 2025-05-18 22:10:36,923 ] 64 root - INFO - Data ingestion completed successfully

@@ -1,0 +1,29 @@
+[ 2025-05-18 22:12:37,507 ] 45 root - INFO - Starting data ingestion for esp32_2_data
+[ 2025-05-18 22:12:37,540 ] 49 root - INFO - Read the dataset as dataframe
+[ 2025-05-18 22:12:37,672 ] 56 root - INFO - Saved the raw dataset to C:\Kuliah\Semester 6\Signal Processing and Multimedia Services\Project\pslm-project\data\esp32_2_data\raw_data.csv
+[ 2025-05-18 22:12:37,672 ] 59 root - INFO - Splitting the dataset into train and test sets
+[ 2025-05-18 22:12:37,801 ] 64 root - INFO - Data ingestion completed successfully
+[ 2025-05-18 22:12:37,907 ] 49 root - INFO - Converted timestamp to datetime
+[ 2025-05-18 22:12:37,912 ] 53 root - INFO - The timestamp set as an index
+[ 2025-05-18 22:12:37,921 ] 57 root - INFO - Dataset shape after resampling: (1553, 6)
+[ 2025-05-18 22:12:37,922 ] 58 root - INFO - Null values in the dataset
+temperature              118
+humidity(%)              118
+latency(ms)              118
+throughput(bytes/sec)    118
+packet_loss(%)           118
+rssi(dBm)                118
+dtype: int64
+[ 2025-05-18 22:12:37,924 ] 62 root - INFO - Null values in the dataset
+temperature              0
+humidity(%)              0
+latency(ms)              0
+throughput(bytes/sec)    0
+packet_loss(%)           0
+rssi(dBm)                0
+dtype: int64
+[ 2025-05-18 22:12:37,930 ] 66 root - INFO - Dataset for 24 hours: (1441, 6)
+[ 2025-05-18 22:12:37,935 ] 79 root - INFO - Full processed dataframe saved to artifacts\esp32_2_preprocessor.pkl
+[ 2025-05-18 22:12:37,936 ] 100 root - INFO - Data transformation started
+[ 2025-05-18 22:12:37,937 ] 104 root - INFO - Differencing series created
+[ 2025-05-18 22:12:37,937 ] 110 root - INFO - Applying preprocessing object on training and test dataframe

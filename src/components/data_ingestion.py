@@ -83,7 +83,7 @@ df_esp32_2 = pd.read_csv(esp32_2_file_path)
 if __name__ == "__main__":
   try:
     # Initialize the data ingestion
-    ingestion = DataIngestion(device_id="esp32_1_data")
+    ingestion = DataIngestion(device_id=f"esp32_2_data")
     train_path, test_path = ingestion.initiate_data_ingestion()
     
     # Load the train and test data
@@ -96,7 +96,8 @@ if __name__ == "__main__":
     data_transform = DataTransformation(
       df=df_train.copy(),
       time_column="timestamp",
-      target_column=None
+      target_column=None,
+      device_id="esp32_2",
     )
     data_transform.get_data_transformer_object()
     data_transform.save_for_visualization()
@@ -105,10 +106,10 @@ if __name__ == "__main__":
       print(f"Training model for {col}")
       data_transform.target_column = col
       series = data_transform.get_series()
-      train_series, test_series, _ = data_transform.initiate_data_transformation()
+      train_series, test_series, _, _ = data_transform.initiate_data_transformation()
       
       # Train the ARIMA model
-      model_trainer = ModelTrainer(series=train_series, order=(1, 1, 1), model_name=f"esp32_1_{col}")
+      model_trainer = ModelTrainer(series=train_series, order=(1, 1, 1), model_name=f"esp32_2_{col}")
       mse = model_trainer.initiate_model_trainer()
   except Exception as e:
     raise CustomException(e, sys)
