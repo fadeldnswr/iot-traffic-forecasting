@@ -15,7 +15,7 @@ router = APIRouter()
 
 # Define the path to the model
 MODEL_BASE_PATH = "artifacts"
-PROCESSED_DATA_PATH = os.path.join(MODEL_BASE_PATH, "preprocessor.pkl")
+PROCESSED_DATA_PATH = os.path.join(MODEL_BASE_PATH, "esp32_1_preprocessor.pkl")
 
 # Define path parameters for all the predictions graphs
 @router.get("/all",

@@ -1,0 +1,80 @@
+[ 2025-05-19 13:05:36,440 ] 45 root - INFO - Starting data ingestion for esp32_2_data
+[ 2025-05-19 13:05:36,469 ] 49 root - INFO - Read the dataset as dataframe
+[ 2025-05-19 13:05:36,598 ] 56 root - INFO - Saved the raw dataset to C:\Kuliah\Semester 6\Signal Processing and Multimedia Services\Project\pslm-project\data\esp32_2_data\raw_data.csv
+[ 2025-05-19 13:05:36,598 ] 59 root - INFO - Splitting the dataset into train and test sets
+[ 2025-05-19 13:05:36,715 ] 64 root - INFO - Data ingestion completed successfully
+[ 2025-05-19 13:05:36,817 ] 49 root - INFO - Converted timestamp to datetime
+[ 2025-05-19 13:05:36,828 ] 53 root - INFO - The timestamp set as an index
+[ 2025-05-19 13:05:36,831 ] 57 root - INFO - Dataset shape after resampling: (1553, 6)
+[ 2025-05-19 13:05:36,832 ] 58 root - INFO - Null values in the dataset
+temperature              118
+humidity(%)              118
+latency(ms)              118
+throughput(bytes/sec)    118
+packet_loss(%)           118
+rssi(dBm)                118
+dtype: int64
+[ 2025-05-19 13:05:36,835 ] 62 root - INFO - Null values in the dataset
+temperature              0
+humidity(%)              0
+latency(ms)              0
+throughput(bytes/sec)    0
+packet_loss(%)           0
+rssi(dBm)                0
+dtype: int64
+[ 2025-05-19 13:05:36,836 ] 66 root - INFO - Dataset for 24 hours: (1441, 6)
+[ 2025-05-19 13:05:36,838 ] 80 root - INFO - Full processed dataframe saved to artifacts\esp32_2_preprocessor.pkl
+[ 2025-05-19 13:05:36,838 ] 101 root - INFO - Data transformation started
+[ 2025-05-19 13:05:36,838 ] 105 root - INFO - Differencing series created
+[ 2025-05-19 13:05:36,838 ] 111 root - INFO - Applying preprocessing object on training and test dataframe
+[ 2025-05-19 13:05:36,838 ] 41 root - INFO - Splitting the data into train and test sets
+[ 2025-05-19 13:05:36,838 ] 44 root - INFO - Train set shape: (921,)
+[ 2025-05-19 13:05:36,838 ] 45 root - INFO - Test set shape: (231,)
+[ 2025-05-19 13:05:36,838 ] 48 root - INFO - Training the ARIMA model
+[ 2025-05-19 13:05:37,030 ] 56 root - INFO - Mean Squared Error: 0.00023764088997925762
+[ 2025-05-19 13:05:37,054 ] 61 root - INFO - Model saved to artifacts\esp32_2_temperature_model.pkl
+[ 2025-05-19 13:05:37,055 ] 101 root - INFO - Data transformation started
+[ 2025-05-19 13:05:37,055 ] 105 root - INFO - Differencing series created
+[ 2025-05-19 13:05:37,055 ] 111 root - INFO - Applying preprocessing object on training and test dataframe
+[ 2025-05-19 13:05:37,055 ] 41 root - INFO - Splitting the data into train and test sets
+[ 2025-05-19 13:05:37,055 ] 44 root - INFO - Train set shape: (921,)
+[ 2025-05-19 13:05:37,055 ] 45 root - INFO - Test set shape: (231,)
+[ 2025-05-19 13:05:37,055 ] 48 root - INFO - Training the ARIMA model
+[ 2025-05-19 13:05:37,328 ] 56 root - INFO - Mean Squared Error: 0.16806400960418888
+[ 2025-05-19 13:05:37,352 ] 61 root - INFO - Model saved to artifacts\esp32_2_humidity(%)_model.pkl
+[ 2025-05-19 13:05:37,353 ] 101 root - INFO - Data transformation started
+[ 2025-05-19 13:05:37,353 ] 105 root - INFO - Differencing series created
+[ 2025-05-19 13:05:37,354 ] 111 root - INFO - Applying preprocessing object on training and test dataframe
+[ 2025-05-19 13:05:37,354 ] 41 root - INFO - Splitting the data into train and test sets
+[ 2025-05-19 13:05:37,354 ] 44 root - INFO - Train set shape: (921,)
+[ 2025-05-19 13:05:37,354 ] 45 root - INFO - Test set shape: (231,)
+[ 2025-05-19 13:05:37,354 ] 48 root - INFO - Training the ARIMA model
+[ 2025-05-19 13:05:37,627 ] 56 root - INFO - Mean Squared Error: 0.0010353686628167844
+[ 2025-05-19 13:05:37,650 ] 61 root - INFO - Model saved to artifacts\esp32_2_latency(ms)_model.pkl
+[ 2025-05-19 13:05:37,651 ] 101 root - INFO - Data transformation started
+[ 2025-05-19 13:05:37,652 ] 105 root - INFO - Differencing series created
+[ 2025-05-19 13:05:37,652 ] 111 root - INFO - Applying preprocessing object on training and test dataframe
+[ 2025-05-19 13:05:37,652 ] 41 root - INFO - Splitting the data into train and test sets
+[ 2025-05-19 13:05:37,652 ] 44 root - INFO - Train set shape: (921,)
+[ 2025-05-19 13:05:37,652 ] 45 root - INFO - Test set shape: (231,)
+[ 2025-05-19 13:05:37,652 ] 48 root - INFO - Training the ARIMA model
+[ 2025-05-19 13:05:37,775 ] 56 root - INFO - Mean Squared Error: 0.0
+[ 2025-05-19 13:05:37,801 ] 61 root - INFO - Model saved to artifacts\esp32_2_packet_loss(%)_model.pkl
+[ 2025-05-19 13:05:37,802 ] 101 root - INFO - Data transformation started
+[ 2025-05-19 13:05:37,802 ] 105 root - INFO - Differencing series created
+[ 2025-05-19 13:05:37,802 ] 111 root - INFO - Applying preprocessing object on training and test dataframe
+[ 2025-05-19 13:05:37,802 ] 41 root - INFO - Splitting the data into train and test sets
+[ 2025-05-19 13:05:37,802 ] 44 root - INFO - Train set shape: (921,)
+[ 2025-05-19 13:05:37,802 ] 45 root - INFO - Test set shape: (231,)
+[ 2025-05-19 13:05:37,802 ] 48 root - INFO - Training the ARIMA model
+[ 2025-05-19 13:05:37,896 ] 56 root - INFO - Mean Squared Error: 1.8398493926253135e-35
+[ 2025-05-19 13:05:37,923 ] 61 root - INFO - Model saved to artifacts\esp32_2_throughput(bytes/sec)_model.pkl
+[ 2025-05-19 13:05:37,924 ] 101 root - INFO - Data transformation started
+[ 2025-05-19 13:05:37,924 ] 105 root - INFO - Differencing series created
+[ 2025-05-19 13:05:37,925 ] 111 root - INFO - Applying preprocessing object on training and test dataframe
+[ 2025-05-19 13:05:37,925 ] 41 root - INFO - Splitting the data into train and test sets
+[ 2025-05-19 13:05:37,925 ] 44 root - INFO - Train set shape: (921,)
+[ 2025-05-19 13:05:37,925 ] 45 root - INFO - Test set shape: (231,)
+[ 2025-05-19 13:05:37,925 ] 48 root - INFO - Training the ARIMA model
+[ 2025-05-19 13:05:38,098 ] 56 root - INFO - Mean Squared Error: 0.5481518268475105
+[ 2025-05-19 13:05:38,121 ] 61 root - INFO - Model saved to artifacts\esp32_2_rssi(dBm)_model.pkl

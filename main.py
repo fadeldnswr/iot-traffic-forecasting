@@ -6,7 +6,8 @@ The backend is built using FastAPI and is designed to be modular and scalable.
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.api import graphs, prediction
+from api import esp1_prediction, esp2_prediction
+from src.api import graphs
 
 # Configure the FastAPI application
 app = FastAPI(
@@ -27,7 +28,8 @@ app.add_middleware(
 
 # Create the routers
 app.include_router(graphs.router, tags=["graphs"], prefix="/graphs")
-app.include_router(prediction.router, tags=["prediction"], prefix="/prediction")
+app.include_router(esp1_prediction.router, tags=["esp32-1-prediction"], prefix="/esp32-1-prediction")
+app.include_router(esp2_prediction.router, tags=["esp32-2-prediction"], prefix="/esp32-2-prediction")
 
 # Create main page
 @app.get("/")

@@ -57,7 +57,7 @@ class ModelTrainer:
       
       # Save the model
       os.makedirs(os.path.dirname(self.model_trainer_config.trained_model_file_path), exist_ok=True)
-      save_object(self.model_trainer_config.trained_model_file_path, model)
+      save_object(self.model_trainer_config.trained_model_file_path, model, device_id=self.model_trainer_config.trained_model_file_path)
       logging.info(f"Model saved to {self.model_trainer_config.trained_model_file_path}")
       
       return mse

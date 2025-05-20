@@ -74,7 +74,8 @@ class DataTransformation:
         raise CustomException("Full processed dataframe is not set. Please call get_data_transformer_object() first.")
       save_object(
         file_path=self.data_transformation_config.preprocessor_obj_file_path,
-        obj=self.full_processed_df
+        obj=self.full_processed_df,
+        device_id=self.device_id
       )
       logging.info(f"Full processed dataframe saved to {self.data_transformation_config.preprocessor_obj_file_path}")
     except Exception as e:

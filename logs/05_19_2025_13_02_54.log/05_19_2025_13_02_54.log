@@ -1,0 +1,34 @@
+[ 2025-05-19 13:02:55,353 ] 45 root - INFO - Starting data ingestion for esp32_2_data
+[ 2025-05-19 13:02:55,391 ] 49 root - INFO - Read the dataset as dataframe
+[ 2025-05-19 13:02:55,512 ] 56 root - INFO - Saved the raw dataset to C:\Kuliah\Semester 6\Signal Processing and Multimedia Services\Project\pslm-project\data\esp32_2_data\raw_data.csv
+[ 2025-05-19 13:02:55,512 ] 59 root - INFO - Splitting the dataset into train and test sets
+[ 2025-05-19 13:02:55,639 ] 64 root - INFO - Data ingestion completed successfully
+[ 2025-05-19 13:02:55,756 ] 49 root - INFO - Converted timestamp to datetime
+[ 2025-05-19 13:02:55,757 ] 53 root - INFO - The timestamp set as an index
+[ 2025-05-19 13:02:55,760 ] 57 root - INFO - Dataset shape after resampling: (1553, 6)
+[ 2025-05-19 13:02:55,761 ] 58 root - INFO - Null values in the dataset
+temperature              118
+humidity(%)              118
+latency(ms)              118
+throughput(bytes/sec)    118
+packet_loss(%)           118
+rssi(dBm)                118
+dtype: int64
+[ 2025-05-19 13:02:55,764 ] 62 root - INFO - Null values in the dataset
+temperature              0
+humidity(%)              0
+latency(ms)              0
+throughput(bytes/sec)    0
+packet_loss(%)           0
+rssi(dBm)                0
+dtype: int64
+[ 2025-05-19 13:02:55,765 ] 66 root - INFO - Dataset for 24 hours: (1441, 6)
+[ 2025-05-19 13:02:55,767 ] 80 root - INFO - Full processed dataframe saved to artifacts\esp32_2_preprocessor.pkl
+[ 2025-05-19 13:02:55,768 ] 101 root - INFO - Data transformation started
+[ 2025-05-19 13:02:55,769 ] 105 root - INFO - Differencing series created
+[ 2025-05-19 13:02:55,769 ] 111 root - INFO - Applying preprocessing object on training and test dataframe
+[ 2025-05-19 13:02:55,769 ] 41 root - INFO - Splitting the data into train and test sets
+[ 2025-05-19 13:02:55,769 ] 44 root - INFO - Train set shape: (921,)
+[ 2025-05-19 13:02:55,769 ] 45 root - INFO - Test set shape: (231,)
+[ 2025-05-19 13:02:55,769 ] 48 root - INFO - Training the ARIMA model
+[ 2025-05-19 13:02:55,990 ] 56 root - INFO - Mean Squared Error: 0.00023764088997925762

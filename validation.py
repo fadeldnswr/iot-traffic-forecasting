@@ -12,83 +12,19 @@ Columns:
 - rssi(dBm)
 '''
 
-import pandas as pd
-import numpy as np
-import dill
+import sys
+from typing import List
 
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from src.utils.utils import model_results_error
+from src.exception.exception import CustomException
 
-# Load data dan model
-with open("artifacts/preprocessor.pkl", "rb") as f:
-  df = dill.load(f)
+# Define the path to the artifacts directory
+esp32_file_path: List[str] = ["esp32_1", "esp32_2"]
 
-# Define the target columns and metrics
-target_column = ["temperature", "humidity(%)", "latency(ms)", "rssi(dBm)"]
-metrics_esp32_1 = []
-metrics_esp32_2 = []
-
-for col in target_column:
-  with open(f"artifacts/esp32_1_{col}_model.pkl", "rb") as f:
-    model = dill.load(f)
-  
-  # Dapatkan nilai terakhir
-  last_value = df[col].iloc[-1]
-  
-  # Forecast 288 langkah (5 jam)
-  steps = 288
-  forecast = model.forecast(steps=steps)
-  forecast_restored = forecast.cumsum() + last_value
-  
-  # Ground truth
-  ground_truth = df[col].iloc[-steps:]
-  
-  # Hitung MSE
-  mse = mean_squared_error(ground_truth, forecast_restored)
-  rmse = np.sqrt(mse)
-  mae = mean_absolute_error(ground_truth, forecast_restored)
-  
-  # Save the errors in dataframe format
-  metrics_esp32_1.append({
-    "Column": col,
-    "mse": mse,
-    "rmse": rmse,
-    "mae": mae
-  })
-
-for col in target_column:
-  with open(f"artifacts/esp32_2_{col}_model.pkl", "rb") as f:
-    model = dill.load(f)
-  
-  # Dapatkan nilai terakhir
-  last_value = df[col].iloc[-1]
-  
-  # Forecast 288 langkah (5 jam)
-  steps = 288
-  forecast = model.forecast(steps=steps)
-  forecast_restored = forecast.cumsum() + last_value
-  
-  # Ground truth
-  ground_truth = df[col].iloc[-steps:]
-  
-  # Hitung MSE
-  mse = mean_squared_error(ground_truth, forecast_restored)
-  rmse = np.sqrt(mse)
-  mae = mean_absolute_error(ground_truth, forecast_restored)
-  
-  # Save the errors in dataframe format
-  metrics_esp32_2.append({
-    "Column": col,
-    "mse": mse,
-    "rmse": rmse,
-    "mae": mae
-  })
-
-# Print the results
-results_esp32_1 = pd.DataFrame(metrics_esp32_1)
-results_esp32_2 = pd.DataFrame(metrics_esp32_2)
-
-print("==========Results ESP32 1==========")
-print(results_esp32_1)
-print("\n")
-print("==========Results ESP32 2==========")
-print(results_esp32_2)
+if __name__ == "__main__":
+  try:
+    for list in esp32_file_path:
+      # Call the function to print the errors of the model
+      print(model_results_error(list))
+  except Exception as e:
+    raise CustomException(e, sys)

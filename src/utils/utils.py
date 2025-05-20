@@ -6,6 +6,7 @@ The functions are designed to be reusable and modular, allowing for easy integra
 '''
 
 import pandas as pd
+import numpy as np
 import sys
 import matplotlib.pyplot as plt
 import os
@@ -17,6 +18,7 @@ from src.exception.exception import CustomException
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.arima.model import ARIMA
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 # Check the data type of a column function
 def check_data_type(df:pd.DataFrame)-> None:
@@ -98,7 +100,7 @@ def plot_acf_pacf(data: pd.DataFrame, lags:int, title:str):
     raise CustomException(e, sys)
 
 # Create save object function
-def save_object(file_path, obj):
+def save_object(file_path, obj, device_id:str):
   '''
   Save the object to a file using pickle.
   Parameters:
@@ -106,7 +108,8 @@ def save_object(file_path, obj):
   obj: The object to save.
   '''
   try:
-    dir_path = os.path.dirname(file_path)
+    path = os.path.join("artifacts", f"{device_id}_{file_path}" )
+    dir_path = os.path.dirname(path)
     os.makedirs(dir_path, exist_ok=True)
     
     with open(file_path, "wb") as file:
@@ -126,5 +129,53 @@ def load_object(file_path):
   try:
     with open(file_path, "rb") as file:
       return dill.load(file)
+  except Exception as e:
+    raise CustomException(e, sys)
+
+# Create function to print errors of the model
+def model_results_error(esp32_file_path: str) -> pd.DataFrame:
+  '''
+  Function to print the errors of the model.
+  This function loads the model from the artifacts directory and calculates the errors
+  for each target column.
+  '''
+  # Define the path to the artifacts directory
+  with open("artifacts/preprocessor.pkl", "rb") as file:
+    df = dill.load(file)
+  
+  # Define the target columns and metrics
+  target_column: List[str] = ["temperature", "humidity(%)", "latency(ms)", "rssi(dBm)"]
+  metrics_esp32: List[str] = []
+  
+  try:
+    for col in target_column:
+      with open(f"artifacts/{esp32_file_path}_{col}_model.pkl", "rb") as file:
+        model = dill.load(file)
+      
+      # Dapatkan nilai terakhir
+      last_value = df[col].iloc[-1]
+      
+      # Forecast 288 langkah (5 jam)
+      steps = 288
+      forecast = model.forecast(steps=steps)
+      forecast_restored = forecast.cumsum() + last_value
+      
+      # Ground truth
+      ground_truth = df[col].iloc[-steps:]
+      
+      # Hitung MSE
+      mse = mean_squared_error(ground_truth, forecast_restored)
+      rmse = np.sqrt(mse)
+      mae = mean_absolute_error(ground_truth, forecast_restored)
+      
+      # Print the errors into dataframe format
+      metrics_esp32.append({
+        "Column": col,
+        "mse": mse,
+        "rmse": rmse,
+        "mae": mae
+      })
+      
+    return pd.DataFrame(metrics_esp32)
   except Exception as e:
     raise CustomException(e, sys)
