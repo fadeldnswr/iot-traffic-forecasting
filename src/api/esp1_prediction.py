@@ -105,45 +105,50 @@ async def predict_popup(columns: str = Query(..., description="Comma-separated l
   except Exception as e:
     raise HTTPException(status_code=500, detail=str(e))
 
-# Define endpoint for the POST request
-@router.post("/",
-  summary="Predict the target variable for a specific hour",
-  description="This endpoint predicts the target variable for a specific hour.",
-  )
-async def predict_hour(
-  columns: str = Query(..., description="Target column to predict"), 
+@router.post("/")
+async def predict_all_columns(
   hour: int = Query(..., ge=1, le=10, description="Hour to predict")):
   try:
-    # Check if the processed data file exists
     if not os.path.exists(PROCESSED_DATA_PATH):
-      return JSONResponse(status_code=400, content={
-        "error": "Processed data file not found."
-      })
-    
-    # Load the processed data
+      return JSONResponse(status_code=400, content={"error": "Processed data file not found."})
+
     df: pd.DataFrame = load_object(PROCESSED_DATA_PATH)
-    if columns not in df.columns:
-      return JSONResponse(status_code=400, content={
-        "error": f"Column {columns} not found in the processed data."
-      })
-    
-    # Load the model
-    model_path = os.path.join(MODEL_BASE_PATH, f"esp32_1_{columns}_model.pkl")
-    if not os.path.exists(model_path):
-      return JSONResponse(status_code=400, content={
-        "error": f"Model for {columns} not found."
-      })
-    model: ARIMAResults = load_object(model_path)
-    steps = hour * 60 # Convert hours to minutes
-    prediction = model.forecast(steps=steps)
-    
-    last_value = df[columns].iloc[-1]
-    prediction_restored = prediction.cumsum() + last_value
-    future_index = pd.date_range(start=df.index[-1] + pd.Timedelta(minutes=1), periods=steps, freq="min")
-    
+    target_columns = ["temperature", "humidity(%)", "latency(ms)", "packet_loss(%)", "throughput(bytes/sec)", "rssi(dBm)"]
+    steps = hour * 60
+    predictions = {}
+    all_labels = None
+    actual_length = 0
+
+    # Ambil 80% terakhir dari data
+    split_index = int(len(df) * 0.8)
+    df_actual = df.iloc[-split_index:]
+
+    for col in target_columns:
+      model_path = os.path.join(MODEL_BASE_PATH, f"esp32_2_{col}_model.pkl")
+      if not os.path.exists(model_path):
+        continue
+
+      model: ARIMAResults = load_object(model_path)
+      forecast = model.forecast(steps=steps)
+      last_value = df[col].iloc[-1]
+      forecast_restored = forecast.cumsum() + last_value
+
+      # Gabungkan actual dan forecast
+      combined = pd.concat([df_actual[col], forecast_restored], ignore_index=True)
+      predictions[col] = combined.tolist()
+
+      # Label (timestamp) hanya dibuat sekali
+      if all_labels is None:
+        actual_timestamps = df_actual.index
+        forecast_start = actual_timestamps[-1] + pd.Timedelta(minutes=1)
+        forecast_timestamps = pd.date_range(start=forecast_start, periods=steps, freq="min")
+        all_labels = list(actual_timestamps.strftime("%Y-%m-%d %H:%M")) + list(forecast_timestamps.strftime("%Y-%m-%d %H:%M"))
+        actual_length = len(actual_timestamps)
+
     return JSONResponse(status_code=200, content={
-      "labels": future_index.strftime("%Y-%m-%d %H:%M").tolist(),
-      "data": prediction_restored.tolist()
+      "labels": all_labels,
+      "data": predictions,
+      "actual_length": actual_length
     })
   except Exception as e:
     raise HTTPException(status_code=500, detail=str(e))

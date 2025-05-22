@@ -6,8 +6,7 @@ The backend is built using FastAPI and is designed to be modular and scalable.
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api import esp1_prediction, esp2_prediction
-from src.api import graphs
+from src.api import graphs, esp1_prediction, esp2_prediction
 
 # Configure the FastAPI application
 app = FastAPI(

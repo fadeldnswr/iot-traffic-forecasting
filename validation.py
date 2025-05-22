@@ -14,6 +14,7 @@ Columns:
 
 import sys
 from typing import List
+import pandas as pd
 
 from src.utils.utils import model_results_error
 from src.exception.exception import CustomException
@@ -25,6 +26,11 @@ if __name__ == "__main__":
   try:
     for list in esp32_file_path:
       # Call the function to print the errors of the model
-      print(model_results_error(list))
+      esp32_1_error = model_results_error(esp32_file_path=esp32_file_path[0])
+      esp32_2_error = model_results_error(esp32_file_path=esp32_file_path[1])
+      
+      # Save into csv format
+      esp32_1_error.to_csv(f"{esp32_file_path[0]}_error.csv", index=False)
+      esp32_2_error.to_csv(f"{esp32_file_path[1]}_error.csv", index=False)
   except Exception as e:
     raise CustomException(e, sys)
